@@ -15,12 +15,12 @@ class LanguageSerializer(serializers.ModelSerializer):
 class QuotesSerializer(serializers.ModelSerializer):
     
     #content = serializers.SerializerMethodField()
-    language = LanguageSerializer()
+    #language = LanguageSerializer()
     class Meta:
         model = Quotes
         fields = '__all__'
-        depth = 1
-
+        #depth = 1
+ 
     #def get_content(self, obj): 
      #   return obj.content[:3]
 

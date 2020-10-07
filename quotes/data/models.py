@@ -16,6 +16,7 @@ class Quotes(models.Model):
     author = models.CharField(max_length=30, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     
+    
 
     def __str__(self):
         return self.content

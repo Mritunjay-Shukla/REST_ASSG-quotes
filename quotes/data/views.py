@@ -15,10 +15,11 @@ class LanguageAPIView(APIView):
         return Response(lan_ser_obj.data)
 
 
-class QuotesAPIView(APIView):
+class QuotesAPIView(APIView): 
 
     def get(self, request, *args, **kwargs):
         obj = Quotes.objects.all()
+        print(obj[0].language)
         ser_obj = QuotesSerializer(obj, many=True)
         return Response(ser_obj.data)
 
@@ -32,23 +33,34 @@ class QuotesAPIView(APIView):
 class RandomAPI(APIView):
 
     def get(self, request, *args, **kwargs):
-        print(request.data)
+        #print(request.data)
         obj = Quotes.objects.order_by('?').first()
-        ser_obj = QuotesSerializer(obj, many=True)
+        """ print(obj[0])
+        id = obj[0].id
+        #print(id)
+        obj = Quotes.objects.get(id = id)
+        print(obj) """
+        ser_obj = QuotesSerializer(obj)
         return Response(ser_obj.data)
 
+class RandomLanguageAPIView(APIView):
+
+    def get(self, request, value, *args, **kwargs):
+        print(value)
+        obj = Quotes.objects.filter(language__name = value).order_by('?').first()
+        ser_obj = QuotesSerializer(obj)
+        return Response(ser_obj.data)
 
 class BylanguageAPI(APIView):
 
     def get(self, request, value, *args, **kwargs):
-        v = value
-        l = Language.objects.get(name=v)
-        obj = Quotes.objects.get(language_id = l.id)
+        print(value)
+        obj = Quotes.objects.filter(language__name = value)
         ser_obj = QuotesSerializer(obj, many=True)
         return Response(ser_obj.data)
 
 
-class UpdateAPI(APIView):
+class UpdateAPI(APIView):                                   
 
     def get(self, request, id, *args, **kwargs):
         quote = Quotes.objects.get(id=id)
